@@ -5,13 +5,19 @@ class ContactService {
     this.Contact = client.db().collection("contacts");
   }
 
+  // 🔥 FIX CHÍNH Ở ĐÂY
   extractContactData(payload) {
     const contact = {
       name: payload.name,
       email: payload.email,
       address: payload.address,
       phone: payload.phone,
-      favorite: payload.favorite,
+
+      // ✅ ép kiểu boolean chuẩn (fix lỗi không bỏ thích được)
+      favorite:
+        payload.favorite === true ||
+        payload.favorite === "true" ||
+        payload.favorite === "on",
     };
 
     Object.keys(contact).forEach(

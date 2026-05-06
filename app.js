@@ -3,19 +3,22 @@ const cors = require("cors");
 
 const ApiError = require("./app/api-error");
 const contactsRouter = require("./app/routes/contact.route");
+const authRouter = require("./app/routes/auth.route");
 
 const app = express();
 
+// ✅ middleware phải đặt trước
 app.use(cors());
 app.use(express.json());
+
+// ✅ routes
+app.use("/api/auth", authRouter);
+app.use("/api/contacts", contactsRouter);
 
 // test route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to contact book application." });
 });
-
-// API
-app.use("/api/contacts", contactsRouter);
 
 // 404
 app.use((req, res, next) => {
